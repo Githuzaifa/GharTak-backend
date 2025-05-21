@@ -22,16 +22,16 @@ router.route("/login").post(loginUser);
 router.route("/refresh-token").post(refreshAccessToken);
 
 // Protected routes
-router.route("/logout").post(verifyJWT, logoutUser);
-router.route("/change-password").post(verifyJWT, changeCurrentPassword);
-router.route("/current-user").get(verifyJWT, getCurrentUser);
-router.route("/update-profile").patch(verifyJWT, updateUserProfile);
-router.route("/update-location").patch(verifyJWT, updateUserLocation);
+router.route("/logout").post( logoutUser);
+router.route("/change-password").post( changeCurrentPassword);
+router.route("/current-user").get( getCurrentUser);
+router.route("/update-profile").patch(updateUserProfile);
+router.route("/update-location").patch(updateUserLocation);
 
 // Admin protected routes
 router.route("/register").post(registerUser);
 // router.route("/credits/:userId").patch(verifyJWT, verifyAdmin, updateUserCredits);
-router.route("/users").get(verifyJWT, verifyAdmin, getAllUsers);
-router.route("/:id").delete(verifyJWT, verifyAdmin, deleteUser);
+router.route("/users").get(getAllUsers);
+router.route("/:id").delete(deleteUser);
 
 export default router;
