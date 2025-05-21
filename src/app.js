@@ -2,7 +2,12 @@ import express from 'express';
 import cors from 'cors';
 // import cookieParser from 'cookie-parser';
 const app = express();
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:8081', // Explicitly set your frontend origin
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Include all needed methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Important for JWT
+}));
 app.use(express.json({limit:'16kb'}));
 app.use(express.urlencoded({extended: true, limit:'16kb'}));
 app.use(express.static('public'))
