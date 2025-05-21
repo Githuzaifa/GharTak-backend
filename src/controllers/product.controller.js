@@ -32,7 +32,7 @@ const createProduct = asyncHandler(async (req, res) => {
     category,
     stock,
     image: imageUrl || null,
-    createdBy: 1
+    createdBy: "1"
   });
 
   return res
