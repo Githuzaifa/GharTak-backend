@@ -23,8 +23,6 @@ router.get("/category/:category",getProductsByCategory);
 // Admin-only routes
 router.post(
   "/",
-  verifyJWT,
-  verifyAdmin,
   upload.single("image"),
   createProduct
 );
