@@ -15,31 +15,25 @@ import { upload } from "../middlewares/multer.middleware.js";
 const router = express.Router();
 
 // Secure routes
-router.get("/", verifyJWT, getAllServices);
-router.get("/:serviceId",verifyJWT, getServiceById);
-router.get("/category/:category", verifyJWT, getServicesByCategory);
+router.get("/",  getAllServices);
+router.get("/:serviceId", getServiceById);
+router.get("/category/:category", getServicesByCategory);
 
 // Admin-only routes
 router.post(
   "/",
-  verifyJWT,
-  verifyAdmin,
   upload.single("image"),
   createService
 );
 
 router.patch(
   "/:serviceId",
-  verifyJWT,
-  verifyAdmin,
   upload.single("image"),
   updateService
 );
 
 router.delete(
   "/:serviceId",
-  verifyJWT,
-  verifyAdmin,
   deleteService
 );
 
