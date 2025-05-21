@@ -8,9 +8,9 @@ import fs from "fs"; // ← THIS WAS MISSING
 
 // Create Product (Admin Only)
 const createProduct = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can create products");
-  }
+ // if (!req.user?.admin) {
+  //  throw new apiError(403, "Unauthorized: Only admins can create products");
+  //}
 
   const { name, description, price, category, stock } = req.body;
 
