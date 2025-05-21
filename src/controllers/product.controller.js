@@ -34,7 +34,7 @@ const createProduct = asyncHandler(async (req, res) => {
     category,
     stock,
     image: imageUrl || null,
-    createdBy: new mongoose.Types.ObjectId("664ae938fda3b5f41c92c300");
+    createdBy: new mongoose.Types.ObjectId("664ae938fda3b5f41c92c300")
   });
 
   return res
