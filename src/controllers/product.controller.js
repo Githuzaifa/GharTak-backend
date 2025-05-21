@@ -4,6 +4,8 @@ import { apiError } from "../utils/apiError.js";
 import { Product } from "../models/product.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import fs from "fs"; // ← THIS WAS MISSING
+import mongoose from "mongoose";
+
 
 
 // Create Product (Admin Only)
@@ -32,7 +34,7 @@ const createProduct = asyncHandler(async (req, res) => {
     category,
     stock,
     image: imageUrl || null,
-    createdBy: "1"
+    createdBy: new mongoose.Types.ObjectId("664ae938fda3b5f41c92c300");
   });
 
   return res
