@@ -4,9 +4,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors({
   origin: 'http://localhost:8081', // Explicitly set your frontend origin
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Include all needed methods
-  allowedHeaders: ['Content-Type', 'Authorization'] // Important for JWT
+  credentials: true
 }));
 app.use(express.json({limit:'16kb'}));
 app.use(express.urlencoded({extended: true, limit:'16kb'}));
