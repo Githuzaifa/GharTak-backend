@@ -64,11 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const options = {
   httpOnly: true,
-  secure: false, // Must be false for HTTP in development
-  sameSite: 'lax', // 'none' requires secure: true
-  domain: 'localhost',
-  path: '/',
-  maxAge: 24 * 60 * 60 * 1000 // 1 day
+  secure: false
 };
 
   return res
@@ -101,11 +97,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
   httpOnly: true,
-  secure: false, // Must be false for HTTP in development
-  sameSite: 'lax', // 'none' requires secure: true
-  domain: 'localhost',
-  path: '/',
-  maxAge: 24 * 60 * 60 * 1000 // 1 day
+  secure: false
 };
 
   return res
