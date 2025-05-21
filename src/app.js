@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 // import cookieParser from 'cookie-parser';
 const app = express();
+import cookieParser from "cookie-parser"
+app.use(cookieParser())
+
 app.use(cors({
   origin: 'http://localhost:8081', // Explicitly set your frontend origin
   credentials: true
