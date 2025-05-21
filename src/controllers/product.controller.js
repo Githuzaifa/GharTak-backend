@@ -100,9 +100,9 @@ const getProductById = asyncHandler(async (req, res) => {
 
 // Delete Product (Admin Only)
 const deleteProduct = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can delete products");
-  }
+  //if (!req.user?.admin) {
+   // throw new apiError(403, "Unauthorized: Only admins can delete products");
+  //}
 
   const { productId } = req.params;
   
