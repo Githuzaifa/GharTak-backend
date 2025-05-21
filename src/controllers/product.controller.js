@@ -50,8 +50,8 @@ const updateProduct = asyncHandler(async (req, res) => {
   const updateData = req.body;
 
   // Handle image update
-  if (req.file) {
-    const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+  if (req.image) {
+    const cloudinaryResponse = await uploadOnCloudinary(req.image.path);
     if (!cloudinaryResponse?.url) {
       throw new apiError(500, "Failed to upload image to Cloudinary");
     }
