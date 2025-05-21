@@ -62,7 +62,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new apiError(500, "Something went wrong while registering the user");
   }
 
-  const options = { httpOnly: true, secure: true };
+  const options = {
+  httpOnly: true,
+  secure: false, // Must be false for HTTP in development
+  sameSite: 'lax', // 'none' requires secure: true
+  domain: 'localhost',
+  path: '/',
+  maxAge: 24 * 60 * 60 * 1000 // 1 day
+};
 
   return res
     .status(201)
@@ -92,7 +99,14 @@ const loginUser = asyncHandler(async (req, res) => {
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
   const loggedInUser = await User.findById(user._id).select("-password -refreshToken -__v");
 
-  const options = { httpOnly: true, secure: true };
+  const options = {
+  httpOnly: true,
+  secure: false, // Must be false for HTTP in development
+  sameSite: 'lax', // 'none' requires secure: true
+  domain: 'localhost',
+  path: '/',
+  maxAge: 24 * 60 * 60 * 1000 // 1 day
+};
 
   return res
     .status(200)
