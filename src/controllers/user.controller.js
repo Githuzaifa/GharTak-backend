@@ -308,9 +308,9 @@ const updateUserCredits = asyncHandler(async (req, res) => {
 
 // Admin: Get all users
 const getAllUsers = asyncHandler(async (req, res) => {
-  if (!req.user.admin) {
-    throw new apiError(403, "Unauthorized: Admin access required");
-  }
+  //if (!req.user.admin) {
+  //  throw new apiError(403, "Unauthorized: Admin access required");
+  //}
 
   const users = await User.find({})
     .select("-password -refreshToken -__v");
