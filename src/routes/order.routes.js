@@ -29,8 +29,6 @@ router.get(
 // Admin routes
 router.get(
     "/",
-    verifyJWT,
-    verifyAdmin,
     getAllOrders
 );
 
