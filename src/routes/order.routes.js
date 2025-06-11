@@ -23,7 +23,6 @@ router.post(
 
 router.get(
     "/my-orders",
-    verifyJWT,
     getUserOrders
 );
 
