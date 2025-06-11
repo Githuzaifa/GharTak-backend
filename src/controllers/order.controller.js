@@ -155,9 +155,9 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
 
 // Get All Orders (Admin)
 const getAllOrders = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can view all orders");
-  }
+  // if (!req.user?.admin) {
+  //  throw new apiError(403, "Unauthorized: Only admins can view all orders");
+  //}
 
   const { status, paymentStatus } = req.query;
   const filter = {};
