@@ -6,6 +6,7 @@ import { Product } from "../models/product.model.js";
 import { Service } from "../models/service.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import mongoose from "mongoose";
 
 // Place Order (User)
 const placeOrder = asyncHandler(async (req, res) => {
