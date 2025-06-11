@@ -16,8 +16,6 @@ const router = express.Router();
 // User routes
 router.post(
     "/",
-    verifyJWT,
-    upload.single("paymentScreenshot"),
     placeOrder
 );
 
