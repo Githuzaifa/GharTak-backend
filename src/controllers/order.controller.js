@@ -106,7 +106,13 @@ const placeOrder = asyncHandler(async (req, res) => {
 
 // Get User Orders (User)
 const getUserOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id })
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  const orders = await Order.find({ user: userId })
     .sort("-createdAt")
     .populate("items.itemId", "name price");
 
