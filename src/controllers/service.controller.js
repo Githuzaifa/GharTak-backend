@@ -3,6 +3,7 @@ import { apiResponse } from "../utils/apiResponse.js";
 import { apiError } from "../utils/apiError.js";
 import { Service } from "../models/service.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import mongoose from "mongoose";
 
 // Create Service (Admin Only)
 const createService = asyncHandler(async (req, res) => {
@@ -28,7 +29,7 @@ const createService = asyncHandler(async (req, res) => {
     price,
     category,
     image: imageUrl || null,
-    createdBy: req.user._id
+    createdBy: new mongoose.Types.ObjectId("664ae938fda3b5f41c92c300")
   });
 
   return res
