@@ -16,7 +16,6 @@ const router = express.Router();
 // User routes
 router.post(
     "/",
-    verifyJWT,
     upload.single("screenshot"),
     createPayment
 );
@@ -30,8 +29,6 @@ router.get(
 // Admin routes
 router.get(
     "/",
-    verifyJWT,
-    verifyAdmin,
     getAllPayments
 );
 
