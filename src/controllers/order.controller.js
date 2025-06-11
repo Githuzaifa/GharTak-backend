@@ -10,7 +10,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 // Place Order (User)
 const placeOrder = asyncHandler(async (req, res) => {
   const { items, paymentMethod, location } = req.body;
-  const userId = req.user._id;
+  const userId = req.query.userId;
 
   // Validate input (remove location from required fields)
   if (!items?.length || !paymentMethod) {
