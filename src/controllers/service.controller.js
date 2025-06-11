@@ -6,9 +6,9 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // Create Service (Admin Only)
 const createService = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can create services");
-  }
+  //if (!req.user?.admin) {
+   // throw new apiError(403, "Unauthorized: Only admins can create services");
+  //}
 
   const { name, description, price, category } = req.body;
 
