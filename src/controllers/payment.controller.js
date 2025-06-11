@@ -85,9 +85,9 @@ const updatePaymentStatus = asyncHandler(async (req, res) => {
 
 // Get all payments (Admin)
 const getAllPayments = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can view payments");
-  }
+  //if (!req.user?.admin) {
+  //  throw new apiError(403, "Unauthorized: Only admins can view payments");
+  //}
 
   // Get all payments sorted with pending first and oldest first within each status
   const payments = await Payment.find({})
