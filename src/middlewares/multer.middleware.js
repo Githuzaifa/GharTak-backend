@@ -1,6 +1,18 @@
-// multer.config.js
-import multer from "multer";
+import multer from 'multer';
+import cloudinary from 'cloudinary';
 
-const storage = multer.memoryStorage(); // file will be available in req.file.buffer
+const storage = multer.memoryStorage();
 
-export const upload = multer({ storage });
+export const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed!'), false);
+    }
+  }
+});
