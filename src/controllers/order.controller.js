@@ -43,8 +43,19 @@ const placeOrder = asyncHandler(async (req, res) => {
     }
 
     const Model = itemType === "Product" ? Product : Service;
-    const dbItem = await Model.findById(itemId.toString());
-    if (!dbItem) throw new apiError(404, `${itemId} not found `);
+    // Try different lookup strategies sequentially
+const dbItem = await Model.findById(itemId).catch(() => null);
+if (!dbItem) dbItem = await Model.findOne({ _id: itemId }).catch(() => null);
+if (!dbItem && mongoose.Types.ObjectId.isValid(itemId)) {
+  dbItem = await Model.findById(itemId.toString()).catch(() => null);
+}
+if (!dbItem) {
+  dbItem = await Model.findOne({ _id: itemId.toString() }).catch(() => null);
+}
+
+if (!dbItem) {
+  throw new apiError(404, `${itemId} not found`);
+}
 
     // Check stock for products
     if (itemType === "Product" && dbItem.stock < quantity) {
