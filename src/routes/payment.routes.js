@@ -41,8 +41,6 @@ router.get(
 
 router.patch(
     "/:paymentId/status",
-    verifyJWT,
-    verifyAdmin,
     updatePaymentStatus
 );
 
