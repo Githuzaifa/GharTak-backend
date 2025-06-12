@@ -43,13 +43,7 @@ const placeOrder = asyncHandler(async (req, res) => {
     }
 
     const Model = itemType === "Product" ? Product : Service;
-    // 1. Get all products
-    const allProducts = await Model.find({});
-    
-    // 2. Find the product with matching ID
-    const dbItem = allProducts.find(product => 
-      product._id.toString() === itemId.toString()
-    );
+    const dbItem = await Model.findById(itemId);
     if (!dbItem) throw new apiError(404, `${itemId} not found `);
 
     // Check stock for products
