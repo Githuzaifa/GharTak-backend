@@ -42,9 +42,7 @@ const createPayment = asyncHandler(async (req, res) => {
 
     return res.status(201).json(new apiResponse(201, payment, "Payment recorded"));
   } catch (error) {
-    // Cleanup temp file if something fails
-    if (tempFilePath && fs.existsSync(tempFilePath)) {
-      fs.unlinkSync(tempFilePath);
+    console.log(error);
     }
     throw new apiError(500, error.message || "Failed to process payment");
   }
