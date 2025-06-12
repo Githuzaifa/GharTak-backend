@@ -13,21 +13,25 @@ const createPayment = asyncHandler(async (req, res) => {
     throw new apiError(400, "Payment screenshot is required");
   }
 
-  // Upload screenshot to Cloudinary
-  const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
-  if (!cloudinaryResponse?.url) {
-    throw new apiError(500, "Failed to upload payment screenshot");
+  try {
+    // Convert buffer to base64 for Cloudinary
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+
+    const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, {
+      folder: "payment-screenshots",
+    });
+
+    const payment = await Payment.create({
+      user: userId,
+      amount,
+      screenshot: cloudinaryResponse.secure_url,
+    });
+
+    return res.status(201).json(new apiResponse(201, payment, "Payment recorded"));
+  } catch (error) {
+    throw new apiError(500, error.message || "Failed to process payment");
   }
-
-  const payment = await Payment.create({
-    user: req.query.userId,
-    amount,
-    screenshot: cloudinaryResponse.url,
-  });
-
-  return res
-    .status(201)
-    .json(new apiResponse(201, payment, "Payment recorded successfully"));
 });
 
 // Get payment history (User)
