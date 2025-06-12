@@ -5,8 +5,8 @@ import { Payment } from "../models/payment.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const createPayment = asyncHandler(async (req, res) => {
   const { amount } = req.body;
