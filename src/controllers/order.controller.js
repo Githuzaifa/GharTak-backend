@@ -45,17 +45,34 @@ const placeOrder = asyncHandler(async (req, res) => {
     const Model = itemType === "Product" ? Product : Service;
     // Try different lookup strategies sequentially
 let dbItem;
-dbItem = await Model.findById(itemId).catch(() => null);
-if (!dbItem) dbItem = await Model.findOne({ _id: itemId }).catch(() => null);
-if (!dbItem && mongoose.Types.ObjectId.isValid(itemId)) {
-  dbItem = await Model.findById(itemId.toString()).catch(() => null);
+
+// Strategy 1: Standard findById
+try {
+  dbItem = await Model.findById(itemId);
+} catch (err) {
+  console.log('findById error:', err.message);
 }
+
+// Strategy 2: findOne with ObjectId
 if (!dbItem) {
-  dbItem = await Model.findOne({ _id: itemId.toString() }).catch(() => null);
+  try {
+    dbItem = await Model.findOne({ _id: new mongoose.Types.ObjectId(itemId) });
+  } catch (err) {
+    console.log('findOne with ObjectId error:', err.message);
+  }
+}
+
+// Strategy 3: findOne with string
+if (!dbItem) {
+  try {
+    dbItem = await Model.findOne({ _id: itemId.toString() });
+  } catch (err) {
+    console.log('findOne with string error:', err.message);
+  }
 }
 
 if (!dbItem) {
-  throw new apiError(404, `${itemId} not found`);
+  throw new apiError(404, `${itemId} not found after exhaustive search`);
 }
 
     // Check stock for products
