@@ -15,12 +15,10 @@ const createPayment = asyncHandler(async (req, res) => {
 
   try {
     // Convert buffer to base64 for Cloudinary
-    const b64 = Buffer.from(req.file.buffer).toString("base64");
-    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-
-    const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, {
-      folder: "payment-screenshots",
-    });
+    const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+    if (!cloudinaryResponse?.url) {
+      throw new apiError(500, "Failed to upload image to Cloudinary");
+    }
 
     const payment = await Payment.create({
       user: userId,
