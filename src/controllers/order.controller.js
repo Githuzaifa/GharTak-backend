@@ -6,7 +6,7 @@ import { Product } from "../models/product.model.js";
 import { Service } from "../models/service.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import mongoose from "mongoose";
+import { Types } from "mongoose";
 
 // Place Order (User)
 const placeOrder = asyncHandler(async (req, res) => {
@@ -43,7 +43,7 @@ const placeOrder = asyncHandler(async (req, res) => {
     }
 
     const Model = itemType === "Product" ? Product : Service;
-    const dbItem = await Model.findById(itemId);
+    const dbItem = await Model.findById(Types.ObjectId(itemId));
     if (!dbItem) throw new apiError(404, `${itemType} not found`);
 
     // Check stock for products
