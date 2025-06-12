@@ -5,7 +5,9 @@ import { Payment } from "../models/payment.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
-// Create payment (User)
+const fs = require('fs');
+const path = require('path');
+
 const createPayment = asyncHandler(async (req, res) => {
   const { amount } = req.body;
   
@@ -14,20 +16,36 @@ const createPayment = asyncHandler(async (req, res) => {
   }
 
   try {
-    // Convert buffer to base64 for Cloudinary
-    const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
-    if (!cloudinaryResponse?.url) {
-      throw new apiError(500, "Failed to upload image to Cloudinary");
+    // 1. Save buffer to a temporary file
+    const tempDir = path.join(__dirname, '../temp');
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
     }
 
+    const tempFilePath = path.join(tempDir, `payment-${Date.now()}.jpg`);
+    fs.writeFileSync(tempFilePath, req.file.buffer);
+
+    // 2. Upload using existing `uploadOnCloudinary` (expects local file)
+    const cloudinaryResponse = await uploadOnCloudinary(tempFilePath);
+
+    // 3. Delete the temp file after upload
+    if (fs.existsSync(tempFilePath)) {
+      fs.unlinkSync(tempFilePath);
+    }
+
+    // 4. Create payment record
     const payment = await Payment.create({
-      user: userId,
+      user: req.query.userId,
       amount,
-      screenshot: cloudinaryResponse.secure_url,
+      screenshot: cloudinaryResponse.url,
     });
 
     return res.status(201).json(new apiResponse(201, payment, "Payment recorded"));
   } catch (error) {
+    // Cleanup temp file if something fails
+    if (tempFilePath && fs.existsSync(tempFilePath)) {
+      fs.unlinkSync(tempFilePath);
+    }
     throw new apiError(500, error.message || "Failed to process payment");
   }
 });
