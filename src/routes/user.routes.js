@@ -26,7 +26,7 @@ router.route("/logout").post( logoutUser);
 router.route("/change-password").post( changeCurrentPassword);
 router.route("/current-user").get( getCurrentUser);
 router.route("/update-profile").patch(updateUserProfile);
-router.route("/update-credits").patch(updateUserCredits);
+router.route("/update-credits/:userId").patch(updateUserCredits);
 router.route("/update-location").patch(updateUserLocation);
 
 // Admin protected routes
