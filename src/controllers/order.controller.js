@@ -72,7 +72,7 @@ if (!dbItem) {
 }
 
 if (!dbItem) {
-  throw new apiError(404, `${itemId} not found after exhaustive search`);
+  throw new apiError(404, `${dbItem} not found after exhaustive search`);
 }
 
     // Check stock for products
