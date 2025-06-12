@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const orderItemSchema = new mongoose.Schema({
   itemType: {
     type: String,
-    enum: ["Product", "Service"],
+    enum: ["product", "service"],
     required: true,
   },
   itemId: {
