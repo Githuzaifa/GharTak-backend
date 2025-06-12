@@ -20,7 +20,7 @@ const createPayment = asyncHandler(async (req, res) => {
   }
 
   const payment = await Payment.create({
-    user: req.user._id,
+    user: req.query.userId,
     amount,
     screenshot: cloudinaryResponse.url,
   });
