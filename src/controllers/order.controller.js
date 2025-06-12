@@ -49,7 +49,7 @@ let dbItem;
 // Strategy 1: Standard findById
 try {
   
-  if (itemType === "Product") {
+  if (itemType === "product") {
   dbItem = await Product.findById(itemId).exec();
 } else {
   dbItem = await Service.findById(itemId).exec();
