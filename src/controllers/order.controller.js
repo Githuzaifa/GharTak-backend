@@ -48,7 +48,7 @@ let dbItem;
 
 // Strategy 1: Standard findById
 try {
-  dbItem = await Model.findById(itemId).exec();
+  dbItem = await Product.findById(itemId).exec();
 } catch (err) {
   console.log('findById error:', err.message);
 }
