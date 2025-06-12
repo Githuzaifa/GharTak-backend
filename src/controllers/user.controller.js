@@ -270,9 +270,9 @@ const updateUserLocation = asyncHandler(async (req, res) => {
 
 // Admin: Update user credits
 const updateUserCredits = asyncHandler(async (req, res) => {
-  if (!req.user.admin) {
-    throw new apiError(403, "Unauthorized: Admin access required");
-  }
+//if (!req.user.admin) {
+ //   throw new apiError(403, "Unauthorized: Admin access required");
+ // }
 
   const { userId } = req.params;
   const { amount } = req.body;
