@@ -60,9 +60,9 @@ const getPaymentHistory = asyncHandler(async (req, res) => {
 
 // Update payment status (Admin)
 const updatePaymentStatus = asyncHandler(async (req, res) => {
-  if (!req.user?.admin) {
-    throw new apiError(403, "Unauthorized: Only admins can update payment status");
-  }
+ // if (!req.user?.admin) {
+  //  throw new apiError(403, "Unauthorized: Only admins can update payment status");
+ // }
 
   const { paymentId } = req.params;
   const { status } = req.body;
