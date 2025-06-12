@@ -5,33 +5,26 @@ import { Payment } from "../models/payment.model.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
-import fs from 'fs';
-import path from 'path';
-
 const createPayment = asyncHandler(async (req, res) => {
   const { amount } = req.body;
   
   if (!req.file) {
     throw new apiError(400, "Payment screenshot is required");
   }
-    // 1. Save buffer to a temporary file
-    const tempDir = path.join(__dirname, '../temp');
-    if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir, { recursive: true });
-    }
 
-    const tempFilePath = path.join(tempDir, `payment-${Date.now()}.jpg`);
-    fs.writeFileSync(tempFilePath, req.file.buffer);
+  // Use `/tmp` (only writable dir in Vercel)
+  const tempDir = '/tmp';
+  let tempFilePath;
 
-    // 2. Upload using existing `uploadOnCloudinary` (expects local file)
+  try {
+    // 1. Save buffer to a temporary file in `/tmp`
+    tempFilePath = path.join(tempDir, `payment-${Date.now()}.jpg`);
+    await fs.promises.writeFile(tempFilePath, req.file.buffer);
+
+    // 2. Upload to Cloudinary (using your existing function)
     const cloudinaryResponse = await uploadOnCloudinary(tempFilePath);
 
-    // 3. Delete the temp file after upload
-    if (fs.existsSync(tempFilePath)) {
-      fs.unlinkSync(tempFilePath);
-    }
-
-    // 4. Create payment record
+    // 3. Create payment record (no need to manually delete, Vercel clears `/tmp`)
     const payment = await Payment.create({
       user: req.query.userId,
       amount,
@@ -39,6 +32,15 @@ const createPayment = asyncHandler(async (req, res) => {
     });
 
     return res.status(201).json(new apiResponse(201, payment, "Payment recorded"));
+  } catch (error) {
+    // Attempt to delete temp file (optional, Vercel auto-cleans)
+    if (tempFilePath) {
+      try {
+        await fs.promises.unlink(tempFilePath);
+      } catch (cleanupError) {
+        console.error("Failed to delete temp file:", cleanupError);
+      }
+    }
     throw new apiError(500, error.message || "Failed to process payment");
   }
 });
