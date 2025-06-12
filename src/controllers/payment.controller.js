@@ -14,8 +14,6 @@ const createPayment = asyncHandler(async (req, res) => {
   if (!req.file) {
     throw new apiError(400, "Payment screenshot is required");
   }
-
-  try {
     // 1. Save buffer to a temporary file
     const tempDir = path.join(__dirname, '../temp');
     if (!fs.existsSync(tempDir)) {
@@ -41,8 +39,6 @@ const createPayment = asyncHandler(async (req, res) => {
     });
 
     return res.status(201).json(new apiResponse(201, payment, "Payment recorded"));
-  } catch (error) {
-    }
     throw new apiError(500, error.message || "Failed to process payment");
   }
 });
