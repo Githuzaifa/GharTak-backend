@@ -43,7 +43,7 @@ const placeOrder = asyncHandler(async (req, res) => {
     }
 
     const Model = itemType === "Product" ? Product : Service;
-    const dbItem = await Model.findById(new Types.ObjectId(itemId));
+    const item = await Model.where({ _id: itemId }).findOne().exec();
     if (!dbItem) throw new apiError(404, `${itemId} not found `);
 
     // Check stock for products
