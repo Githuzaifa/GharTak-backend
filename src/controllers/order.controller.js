@@ -50,11 +50,9 @@ let dbItem;
 try {
   
   if (itemType === "Product") {
-  dbItem = await Product.findById(itemId)
-    .exec();
+  dbItem = await Product.findById(itemId).exec();
 } else {
-  dbItem = await Service.findById(itemId)
-    .exec();
+  dbItem = await Service.findById(itemId).exec();
 }
 } catch (err) {
   console.log('findById error:', err.message);
