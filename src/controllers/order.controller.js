@@ -56,7 +56,7 @@ try {
 // Strategy 2: findOne with ObjectId
 if (!dbItem) {
   try {
-    dbItem = await Model.findOne({ _id: new mongoose.Types.ObjectId(itemId) });
+    dbItem = await Model.findOne({ _id: new mongoose.Types.ObjectId(itemId).toString() });
   } catch (err) {
     console.log('findOne with ObjectId error:', err.message);
   }
