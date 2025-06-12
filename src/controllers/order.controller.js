@@ -100,7 +100,7 @@ if (!dbItem) {
 
   if (paymentMethod === "credits") {
     if (user.creditBalance < totalAmount) {
-      throw new apiError(400, "Insufficient credits");
+      throw new apiError(400, `Insufficient credits ${user.creditBalance} and ${totalAmount}`);
     }
     user.creditBalance -= totalAmount;
     await user.save();
